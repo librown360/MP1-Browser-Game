@@ -1,0 +1,20 @@
+body {
+    background-color: #e3f2fd;
+}
+
+.container {
+    padding: 10%;
+ }
+ .col, .row{
+    padding: 20px;
+    text-align: center;
+    font-size: 60px;
+    font-weight: bolder;
+ }
+ /* p {
+    visibility: hidden;
+ } */
+ .col, .row, h1 {
+    font-family: Papyrus, Arial;
+    color: whitesmoke;
+ }
