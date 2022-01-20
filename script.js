@@ -1,18 +1,23 @@
-// Create layout for board, scorecard, player options
-//  1 - Add div for each component
-//       - the board
-//       - player options
-//       - game pieces 
-//       - scorecard
-//  2 - Add id attribute for each div with name for each component
+// Player options variables
+var playOne = document.getElementById('player-options').firstElementChild.firstChild.textContent;
+var playTwo = document.getElementById('player-options').lastElementChild.firstChild.textContent;
+console.log(playOne);
+console.log(playTwo);
 
+// Game piece options variables
+var chooseX = document.getElementById('game-pieces').firstElementChild.firstChild.textContent;
+var chooseO = document.getElementById('game-pieces').lastElementChild.firstChild.textContent;
+console.log(chooseX);
+console.log(chooseO);
+
+// Game score variable
+var score = document.getElementById('score-card');
+console.log(score.innerText);
 
 // Allow user to decide whether to play against computer or another person
-//  1 - Show two options on the screen
 //  2 - Code for two players first
 //  3 - Code for one player against computer
 //  4 - Check for efficiency (Is code DRY?)
-
 
 // Allow user to pick game piece (X or O)
 //  1 - Prompt player 1 to choose game piece

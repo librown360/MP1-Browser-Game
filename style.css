@@ -76,7 +76,7 @@ header {
    #game-pieces {
       /* flex-direction: row; */
       min-width: 50%;
-      flex-flow: row nowrap;
+      flex-flow: row wrap;
    }
    #score-card {
       width: 50%;
