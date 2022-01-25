@@ -1,28 +1,153 @@
-// Player options variables
-var playOne = document.getElementById('player-options').firstElementChild.firstChild.textContent;
-var playTwo = document.getElementById('player-options').lastElementChild.firstChild.textContent;
-console.log(playOne);
-console.log(playTwo);
+// Board and board positions variables
+const board = document.querySelector('#board');
+const position = board.querySelectorAll('.col');
 
-// Game piece options variables
-var chooseX = document.getElementById('game-pieces').firstElementChild.firstChild.textContent;
-var chooseO = document.getElementById('game-pieces').lastElementChild.firstChild.textContent;
-console.log(chooseX);
-console.log(chooseO);
+// Player options variables
+var playOne = document.getElementById('one-play-btn');
+var playTwo = document.getElementById('two-play-btn');
+console.log(playOne.textContent);
+console.log(playTwo.textContent);
 
 // Game score variable
-var score = document.getElementById('score-card');
-console.log(score.innerText);
+var score = document.getElementById('score-btn');
+console.log(score.textContent);
 
+// Object for win positions
+const wins = [
+    {
+        name: 'Top Row',
+        positions: [ 'a1', 'b1', 'c1' ]
+    },
+    {
+        name: 'Middle Row',
+        positions: [ 'a2', 'b2', 'c2' ]
+    },
+    {
+        name: 'Bottom Row',
+        positions: [ 'a3', 'b3', 'c3' ]
+    },
+    {
+        name: 'First Column',
+        positions: [ 'a1', 'a2', 'a3' ]
+    },
+    {
+        name: 'Second Column',
+        positions: [ 'b1', 'b2', 'b3' ]
+    },
+    {
+        name: 'Third Column',
+        positions: [ 'c1', 'c2', 'c3' ]
+    },
+    {
+        name: 'Diagonal Forward',
+        positions: [ 'a3', 'b2', 'c1' ]
+    },
+    {
+        name: 'Diagonal Backward',
+        positions: [ 'a1', 'b2', 'c3' ]
+    }
+]
+
+console.log(wins[0].positions);
+
+// Event listeners for the player options and score buttons
+playOne.addEventListener('click', function() {
+    console.log('Player One button clicked')
+    // Make  One Playerbutton active
+    // Disable Two Players button
+});
+playTwo.addEventListener('click', function() {
+    console.log('Player Two button clicked')
+    // Make Two Players button active
+    // Disable One Player button 
+});
+score.addEventListener('click', function() {
+    console.log('Score button clicked')
+});
+
+// Event listener for board 
+board.addEventListener('click', function(e) {
+    // If no more plays show game results
+    if (availablePositions.indexOf(e.target.textContent) === -1) {
+        showResult()
+    } else {
+        // find position
+        var play = availablePositions.indexOf(e.target.textContent);
+        console.log(play);
+        // Track the position and play
+        trackPlay(play, e)
+        // Update the board and player
+        updatePosition(e)
+    }
+}); 
+    
+
+// Board positions array for tracking and managing plays
+var availablePositions = Array.from(position, pos => pos.innerText);
+// console.log(availablePositions);
+
+// Player variable to keep track of moves
+var firstPlay = true;
+
+// Function to update board position and track plays
+function updatePosition(e) {
+    // event.stopPropagation();
+    // check if position is available
+    if (availablePositions.includes(e.target.textContent) === true) { 
+        if (firstPlay === true) {
+            // update value
+            e.target.textContent = 'O';
+            firstPlay = false;
+        } else {
+            e.target.textContent = 'X';
+            firstPlay = true;
+        }
+    }
+}
+
+// Function to track positions
+function trackPlay(play, e) {
+    // Remove from availablePositions array
+    availablePositions.splice(play, 1);
+    console.log(availablePositions);
+    // Add the play to either an O or X array
+    var lastPlay = e.target.textContent
+    // if (lastPlay === 'O') {
+    //     var oPlays = [];
+    //     oPlays.push(play)
+    // }
+    
+    console.log(lastPlay)
+    // After five moves have been made check for a win
+    if (availablePositions.indexOf(e.target.textContent) <= 3) {
+        // check for wins
+    }
+    
+}
+
+//******************************************************************************/
+//******************************************************************************/
+//*********** BELOW ARE NOTES AND OTHER FUNCTIONS TO ADD ... MAYBE LATER *******/
+
+// Function to show result
+function showResult() {
+    // maybe this can go back in event listener section if not too much going on
+}
+
+
+// Function for setting one player option
+function onePlayer() {
+
+}
+
+//Function for setting two players option
+function twoPlayers() {
+    
+}
 // Allow user to decide whether to play against computer or another person
 //  2 - Code for two players first
 //  3 - Code for one player against computer
 //  4 - Check for efficiency (Is code DRY?)
-
-// Allow user to pick game piece (X or O)
-//  1 - Prompt player 1 to choose game piece
-//  2 - Assign chosen game piece to player 1 and unchosen to player 2 (or sys)
-
 
 // Prompt user to pick a square
 //  1 - Prompt player 1 to pick a square

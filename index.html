@@ -10,34 +10,30 @@
     <title>Tic Tac Toe</title>
 </head>
 <body>
-    <section id="board" class="main-container">
+    <section id="main" class="main-container">
         <header class="text-center shadow-lg p-3 me-4 mb-5 bg-primary rounded">
             <h1>Tic Tac Toe</h1>
         </header>
         <!-- Included values in each column/row to see the sizing rendered will hide later -->
-        <section class="container row row-cols-3 shadow-lg p-3 mb-5 bg-body rounded"> 
-            <section class="col bg-primary border"><p>O</p></section>
-            <section class="col bg-primary border"><p></p></section>
-            <section class="col bg-primary border"><p></p></section>
-            <section class="col bg-primary border"><p></p></section>
-            <section class="col bg-primary border"><p>X</p></section>
-            <section class="col bg-primary border"><p></p></section>
-            <section class="col bg-primary border"><p></p></section>
-            <section class="col bg-primary border"><p></p></section>
-            <section class="col bg-primary border"><p>O</p></section>
+        <section id="board" class="container row row-cols-3 shadow-lg p-3 mb-5 bg-body rounded"> 
+            <section id="a1" class="col bg-primary border"><p>a1</p></section>
+            <section id="b1" class="col bg-primary border"><p>b1</p></section>
+            <section id="c1" class="col bg-primary border"><p>c1</p></section>
+            <section id="a2" class="col bg-primary border"><p>a2</p></section>
+            <section id="b2" class="col bg-primary border"><p>b2</p></section>
+            <section id="c2" class="col bg-primary border"><p>c2</p></section>
+            <section id="a3" class="col bg-primary border"><p>a3</p></section>
+            <section id="a3" class="col bg-primary border"><p>b3</p></section>
+            <section id="a3" class="col bg-primary border"><p>c3</p></section>
         </section>
         <footer>
-            <section id="player-options">
-                <section class="bg-primary border"><p>One Player</p></section>
-                <section class="bg-primary border"><p>Two Players</p></section>
-            </section>
-            <section id="game-pieces">
-                <section class="bg-primary border"><p>Choose X</p></section>
-                <section class="bg-primary border"><p>Choose O</p></section>
-            </section>  
+            <section id="player-options" class="d-grid gap-2 col-6 mx-auto" >
+                <button id="one-play-btn" class="btn btn-primary btn-lg" type="button">One Player</button>
+                <button id="two-play-btn" class="btn btn-primary btn-lg" type="button">Two Players</button>
+            </section> 
         </footer> 
         <aside id="score-card">
-            <section class="bg-primary border"><p>Score</p></section>
+            <button id="score-btn" class="btn btn-primary" type="button">Score</button>
         </aside> 
     </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>

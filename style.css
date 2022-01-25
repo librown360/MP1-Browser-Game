@@ -1,13 +1,13 @@
-* {
+/* * {
    border: 3px solid teal;
- }
+ } */
 body {
     background-color: #e3f2fd;
 }
 header {
    width: 100%;
 }
-#board {
+#main {
    margin: 10%;
 }
 .container {
@@ -34,17 +34,19 @@ header {
    margin-top: 5%;
    
  }
- .col, .row, header, footer, aside {
-    font-family: Papyrus, Arial;
-    color: whitesmoke;
-    text-align: center;
-    vertical-align: middle;
+ button {
+   padding: 2%;
+ }
+ .col, .row, header, footer, aside, button {
+   font-family: Papyrus, Arial;
+   color: whitesmoke;
+   text-align: center;
+   vertical-align: middle;
  }
  footer {
-   display: flex;
    flex-direction: row wrap;
-   max-width: 50%;
    align-content: center;
+   justify-content: center;
  }
  
  @media (min-width: 500px) {
@@ -66,17 +68,14 @@ header {
    }
    footer {
       display: flex;
+      flex-direction: row;
       min-width: 100%;
     }
    #player-options {
-      /* flex-direction: row; */
-      min-width: 50%;
-      flex-flow: row nowrap;
-   }
-   #game-pieces {
-      /* flex-direction: row; */
       min-width: 50%;
       flex-flow: row wrap;
+      justify-content: space-evenly;
+      margin-bottom: 4%;
    }
    #score-card {
       width: 50%;
