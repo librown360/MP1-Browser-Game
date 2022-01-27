@@ -1,6 +1,6 @@
 // Board and board positions variables
 const board = document.querySelector('#board');
-const position = board.querySelectorAll('.col');
+const positions = board.querySelectorAll('.col');
 
 // Player options variables
 var playOne = document.getElementById('one-play-btn');
@@ -16,39 +16,39 @@ console.log(score.textContent);
 const wins = [
     {
         name: 'Top Row',
-        positions: [ 'a1', 'b1', 'c1' ]
+        groups: [ 'a1', 'b1', 'c1' ]
     },
     {
         name: 'Middle Row',
-        positions: [ 'a2', 'b2', 'c2' ]
+        groups: [ 'a2', 'b2', 'c2' ]
     },
     {
         name: 'Bottom Row',
-        positions: [ 'a3', 'b3', 'c3' ]
+        groups: [ 'a3', 'b3', 'c3' ]
     },
     {
         name: 'First Column',
-        positions: [ 'a1', 'a2', 'a3' ]
+        groups: [ 'a1', 'a2', 'a3' ]
     },
     {
         name: 'Second Column',
-        positions: [ 'b1', 'b2', 'b3' ]
+        groups: [ 'b1', 'b2', 'b3' ]
     },
     {
         name: 'Third Column',
-        positions: [ 'c1', 'c2', 'c3' ]
+        groups: [ 'c1', 'c2', 'c3' ]
     },
     {
         name: 'Diagonal Forward',
-        positions: [ 'a3', 'b2', 'c1' ]
+        groups: [ 'a3', 'b2', 'c1' ]
     },
     {
         name: 'Diagonal Backward',
-        positions: [ 'a1', 'b2', 'c3' ]
+        groups: [ 'a1', 'b2', 'c3' ]
     }
 ]
 
-console.log(wins[0].positions);
+// console.log(wins[0].groups);
 
 // Event listeners for the player options and score buttons
 playOne.addEventListener('click', function() {
@@ -72,18 +72,20 @@ board.addEventListener('click', function(e) {
         showResult()
     } else {
         // find position
-        var play = availablePositions.indexOf(e.target.textContent);
-        console.log(play);
-        // Track the position and play
-        trackPlay(play, e)
+        var playIndex = availablePositions.indexOf(e.target.textContent);
+        // console.log(playIndex);
+        // Save selected value in variable for tracking the play
+        var trackPosition = e.target.textContent;
         // Update the board and player
         updatePosition(e)
+        // Track the position (playIndex) of the play and its text value (a1, b1, etc)
+        trackPlay(playIndex, trackPosition, e)
     }
 }); 
     
 
 // Board positions array for tracking and managing plays
-var availablePositions = Array.from(position, pos => pos.innerText);
+var availablePositions = Array.from(positions, pos => pos.innerText);
 // console.log(availablePositions);
 
 // Player variable to keep track of moves
@@ -104,24 +106,50 @@ function updatePosition(e) {
         }
     }
 }
+// arrays for tracking the plays to determine any wins
+const oPlays = [];
+const xPlays = [];
 
 // Function to track positions
-function trackPlay(play, e) {
-    // Remove from availablePositions array
-    availablePositions.splice(play, 1);
-    console.log(availablePositions);
-    // Add the play to either an O or X array
-    var lastPlay = e.target.textContent
-    // if (lastPlay === 'O') {
-    //     var oPlays = [];
-    //     oPlays.push(play)
-    // }
+function trackPlay(playIndex, trackPosition, e) {
     
-    console.log(lastPlay)
-    // After five moves have been made check for a win
-    if (availablePositions.indexOf(e.target.textContent) <= 3) {
-        // check for wins
+    // Variable for the updated value (O or X)
+    var lastPlay = e.target.textContent;
+
+    // Remove the position selected from availablePositions array
+    availablePositions.splice(playIndex, 1);
+    // console.log(availablePositions);
+
+    // Add the text value of the selected position to either an O or X array
+    if (lastPlay === 'O') {
+        oPlays.push(trackPosition);
+    } else {
+        xPlays.push(trackPosition);
     }
+    // After five moves have been made check for a win
+    if (availablePositions.length <= 4) {
+        anyWins(oPlays, xPlays)
+    }
+    // console.log(trackPosition);
+    // console.log(lastPlay);
+}
+
+
+function anyWins(oPlays, xPlays) {
+    console.log(oPlays);
+    console.log(xPlays);
+    // check for wins
+    
+    wins.forEach(win => {
+        // console.log(win.groups)
+
+        if (oPlays.includes(win.groups) === true) {     // NEED TO START HERE 
+            console.log('Player One Wins!!')            // SEE Replit test
+        } else                                          
+            if (xPlays === win.groups) {                // use .every & .includes together
+                console.log('Player Two Wins!!')
+            }
+        });
     
 }
 
