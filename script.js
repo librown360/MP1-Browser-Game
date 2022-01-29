@@ -12,7 +12,7 @@ console.log(playTwo.textContent);
 var score = document.getElementById('score-btn');
 console.log(score.textContent);
 
-// Object for win positions
+// Winning positions
 const wins = [
     {
         name: 'Top Row',
@@ -48,8 +48,6 @@ const wins = [
     }
 ]
 
-// console.log(wins[0].groups);
-
 // Event listeners for the player options and score buttons
 playOne.addEventListener('click', function() {
     console.log('Player One button clicked')
@@ -67,33 +65,26 @@ score.addEventListener('click', function() {
 
 // Event listener for board 
 board.addEventListener('click', function(e) {
-    // If no more plays show game results
-    if (availablePositions.indexOf(e.target.textContent) === -1) {
-        showResult()
-    } else {
-        // find position
-        var playIndex = availablePositions.indexOf(e.target.textContent);
-        // console.log(playIndex);
-        // Save selected value in variable for tracking the play
-        var trackPosition = e.target.textContent;
-        // Update the board and player
-        updatePosition(e)
-        // Track the position (playIndex) of the play and its text value (a1, b1, etc)
-        trackPlay(playIndex, trackPosition, e)
-    }
-}); 
+    // find position
+    var playIndex = availablePositions.indexOf(e.target.textContent);
+    // console.log(playIndex);
+    // Save selected value in variable for tracking the play
+    var trackPosition = e.target.textContent;
+    // Update the board and player
+    updatePosition(e)
+    // Track the position (playIndex) of the play and its text value (a1, b1, etc)
+    trackPlay(playIndex, trackPosition, e)
     
+}); 
 
-// Board positions array for tracking and managing plays
+// Array for board positions to track and manage plays
 var availablePositions = Array.from(positions, pos => pos.innerText);
-// console.log(availablePositions);
 
 // Player variable to keep track of moves
 var firstPlay = true;
 
-// Function to update board position and track plays
+// Function to update board position
 function updatePosition(e) {
-    // event.stopPropagation();
     // check if position is available
     if (availablePositions.includes(e.target.textContent) === true) { 
         if (firstPlay === true) {
@@ -106,11 +97,12 @@ function updatePosition(e) {
         }
     }
 }
-// arrays for tracking the plays to determine any wins
+
+// Arrays for tracking plays to determine a win
 const oPlays = [];
 const xPlays = [];
 
-// Function to track positions
+// Function to track positions played
 function trackPlay(playIndex, trackPosition, e) {
     
     // Variable for the updated value (O or X)
@@ -118,9 +110,13 @@ function trackPlay(playIndex, trackPosition, e) {
 
     // Remove the position selected from availablePositions array
     availablePositions.splice(playIndex, 1);
-    // console.log(availablePositions);
 
-    // Add the text value of the selected position to either an O or X array
+    // If no more plays send scratch message
+    if (availablePositions.length === 0) {
+        let message = 'It\'s a Scratch!'
+        showResult(message)
+    }
+    // Add the text value of selected position to either O or X array
     if (lastPlay === 'O') {
         oPlays.push(trackPosition);
     } else {
@@ -130,36 +126,40 @@ function trackPlay(playIndex, trackPosition, e) {
     if (availablePositions.length <= 4) {
         anyWins(oPlays, xPlays)
     }
-    // console.log(trackPosition);
-    // console.log(lastPlay);
 }
 
-
+// Function to check for a win
 function anyWins(oPlays, xPlays) {
-    console.log(oPlays);
-    console.log(xPlays);
-    // check for wins
-    
-    wins.forEach(win => {
-        // console.log(win.groups)
-
-        if (oPlays.includes(win.groups) === true) {     // NEED TO START HERE 
-            console.log('Player One Wins!!')            // SEE Replit test
-        } else                                          
-            if (xPlays === win.groups) {                // use .every & .includes together
-                console.log('Player Two Wins!!')
-            }
+    // Loop through win groups
+    for (const {groups} of wins) {
+        // Compare O plays to win groups
+        let resultO = groups.every(function (element) {
+            return oPlays.includes(element)
         });
-    
+        // Compare X plays to win groups
+        let resultX = groups.every(function (element) {
+            return xPlays.includes(element)
+        });
+        // Send message depending on which player wins
+        if (resultO === true) {
+            let message = 'Player One Wins!'
+            showResult(message);
+        } else 
+            if (resultX === true) {
+                let message = 'Player Two Wins!'
+                showResult(message);
+            }
+    }
 }
 
-//******************************************************************************/
-//******************************************************************************/
-//*********** BELOW ARE NOTES AND OTHER FUNCTIONS TO ADD ... MAYBE LATER *******/
-
-// Function to show result
-function showResult() {
+// Function to show winner or scratch message
+function showResult(message) {
     // maybe this can go back in event listener section if not too much going on
+    let div = document.getElementById('message');
+    let p = document.createElement("p");
+    p.textContent = message
+    div.appendChild(p);
+
 }
 
 
@@ -172,35 +172,21 @@ function onePlayer() {
 function twoPlayers() {
     
 }
-// Allow user to decide whether to play against computer or another person
-//  2 - Code for two players first
-//  3 - Code for one player against computer
-//  4 - Check for efficiency (Is code DRY?)
-
-// Prompt user to pick a square
-//  1 - Prompt player 1 to pick a square
-//  2 - When square is chosen display chosen game piece in the square
-//  3 - Disable chosen squares from being picked
-//  4 - Prompt player 2 to pick a square
-//  5 - Display other game piece in chosen square
-//  6 - Continue to disable chosen squares
-//  NOTE: If playing computer #4 & #5 will be different logic
-
-
-// After first user picks a square prompt second user to pick a square
-// Or if second player is the computer pick strategicly after a second or 2
-//  1 - See above steps ;)
-
-
-// When either player has marked 3 squares in a row (vertically, horizontally,
-// or diagonally) display a message indicating who won
-//  1 - Display a message when either player wins
-//  2 - The message should indicate who won
-//  3 - Maybe include some animated confetti or celebratory animation
-//  4 - When there is no winner (game is a scratch) indicate so in message
-
-
-// If time permits keep track of overall score locally
-//  1 - Need to look up how to do this from past lessons
-//  2 - 
-
+//###############################################################################
+// FINAL TO DOs
+//###############################################################################
+// 1 - Need to stop additional plays when someone wins with positions still available
+// 2 - Need to send message for deciding on one or two players
+// 2 - One player random plays
+// 3 - Play again button (probably change Score to this)
+//      - clear board
+//      - clear arrays (X & O)
+//      - reinstate availablePositions array
+// 4 - READme file
+//###############################################################################
+// If time permits ...
+//###############################################################################
+//  1 - Keep track of overall score locally
+//      - Need to look up how to do this from past lessons
+//  2 - Animation to strike through win
+//  3 - Animation for confetti celebration on win OR a wamp wamp for scratch
