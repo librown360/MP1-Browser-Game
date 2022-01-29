@@ -59,7 +59,7 @@ footer {
    justify-content: center;
 }
  
-@media (min-width: 500px) {
+@media (min-width: 400px) {
    .container {
       flex-flow: row wrap;
       align-content: stretch;
