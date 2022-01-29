@@ -3,14 +3,11 @@ const board = document.querySelector('#board');
 const positions = board.querySelectorAll('.col');
 
 // Player options variables
-var playOne = document.getElementById('one-play-btn');
-var playTwo = document.getElementById('two-play-btn');
-console.log(playOne.textContent);
-console.log(playTwo.textContent);
+var playAgain = document.getElementById('replay-btn');
+var score = document.getElementById('score-btn');
 
 // Game score variable
 var score = document.getElementById('score-btn');
-console.log(score.textContent);
 
 // Winning positions
 const wins = [
@@ -49,33 +46,32 @@ const wins = [
 ]
 
 // Event listeners for the player options and score buttons
-playOne.addEventListener('click', function() {
-    console.log('Player One button clicked')
-    // Make  One Playerbutton active
-    // Disable Two Players button
-});
-playTwo.addEventListener('click', function() {
-    console.log('Player Two button clicked')
-    // Make Two Players button active
-    // Disable One Player button 
+playAgain.addEventListener('click', function() {
+    location.reload();
 });
 score.addEventListener('click', function() {
     console.log('Score button clicked')
+    // Make Two Players button active
+    // Disable One Player button 
 });
 
-// Event listener for board 
-board.addEventListener('click', function(e) {
-    // find position
+// Event listener for board
+board.addEventListener('click', boardClick);
+
+// Function for board click events
+function boardClick(e) {
+    // Find position selected
     var playIndex = availablePositions.indexOf(e.target.textContent);
-    // console.log(playIndex);
+
     // Save selected value in variable for tracking the play
     var trackPosition = e.target.textContent;
+
     // Update the board and player
     updatePosition(e)
+
     // Track the position (playIndex) of the play and its text value (a1, b1, etc)
     trackPlay(playIndex, trackPosition, e)
-    
-}); 
+}
 
 // Array for board positions to track and manage plays
 var availablePositions = Array.from(positions, pos => pos.innerText);
@@ -88,7 +84,7 @@ function updatePosition(e) {
     // check if position is available
     if (availablePositions.includes(e.target.textContent) === true) { 
         if (firstPlay === true) {
-            // update value
+            // update value and play
             e.target.textContent = 'O';
             firstPlay = false;
         } else {
@@ -105,17 +101,12 @@ const xPlays = [];
 // Function to track positions played
 function trackPlay(playIndex, trackPosition, e) {
     
-    // Variable for the updated value (O or X)
-    var lastPlay = e.target.textContent;
-
     // Remove the position selected from availablePositions array
     availablePositions.splice(playIndex, 1);
 
-    // If no more plays send scratch message
-    if (availablePositions.length === 0) {
-        let message = 'It\'s a Scratch!'
-        showResult(message)
-    }
+    // Variable for the updated value (O or X)
+    var lastPlay = e.target.textContent;
+
     // Add the text value of selected position to either O or X array
     if (lastPlay === 'O') {
         oPlays.push(trackPosition);
@@ -140,7 +131,11 @@ function anyWins(oPlays, xPlays) {
         let resultX = groups.every(function (element) {
             return xPlays.includes(element)
         });
-        // Send message depending on which player wins
+        // Remove board event listener if there is a win
+        if ((resultO === true) || (resultX === true)) {
+            board.removeEventListener('click', boardClick);
+        }
+        // Send winner message
         if (resultO === true) {
             let message = 'Player One Wins!'
             showResult(message);
@@ -148,8 +143,15 @@ function anyWins(oPlays, xPlays) {
             if (resultX === true) {
                 let message = 'Player Two Wins!'
                 showResult(message);
-            }
+            }      
     }
+    // If no more plays and no one wins send scratch message
+    if ((oPlays.length === 5) && (xPlays.length === 4) && 
+        (resultO === false) && (resultX === false)) {
+        let message = 'It\'s a Scratch!'
+        showResult(message)
+    }
+     
 }
 
 // Function to show winner or scratch message
@@ -175,14 +177,10 @@ function twoPlayers() {
 //###############################################################################
 // FINAL TO DOs
 //###############################################################################
-// 1 - Need to stop additional plays when someone wins with positions still available
-// 2 - Need to send message for deciding on one or two players
-// 2 - One player random plays
-// 3 - Play again button (probably change Score to this)
-//      - clear board
-//      - clear arrays (X & O)
-//      - reinstate availablePositions array
-// 4 - READme file
+// 3 - Need to send message for deciding on one or two players
+// 4 - One player random plays
+
+// 6 - READme file
 //###############################################################################
 // If time permits ...
 //###############################################################################
