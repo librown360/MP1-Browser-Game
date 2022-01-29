@@ -4,10 +4,10 @@ const positions = board.querySelectorAll('.col');
 
 // Player options variables
 var playAgain = document.getElementById('replay-btn');
-var score = document.getElementById('score-btn');
+// var score = document.getElementById('score-btn');
 
 // Game score variable
-var score = document.getElementById('score-btn');
+// var score = document.getElementById('score-btn');
 
 // Winning positions
 const wins = [
@@ -45,15 +45,15 @@ const wins = [
     }
 ]
 
-// Event listeners for the player options and score buttons
+// Event listener for the play again button
 playAgain.addEventListener('click', function() {
     location.reload();
 });
-score.addEventListener('click', function() {
-    console.log('Score button clicked')
+// score.addEventListener('click', function() {
+//     console.log('Score button clicked')
     // Make Two Players button active
     // Disable One Player button 
-});
+// });
 
 // Event listener for board
 board.addEventListener('click', boardClick);
@@ -84,7 +84,7 @@ function updatePosition(e) {
     // check if position is available
     if (availablePositions.includes(e.target.textContent) === true) { 
         if (firstPlay === true) {
-            // update value and play
+            // update value and player
             e.target.textContent = 'O';
             firstPlay = false;
         } else {
@@ -124,26 +124,25 @@ function anyWins(oPlays, xPlays) {
     // Loop through win groups
     for (const {groups} of wins) {
         // Compare O plays to win groups
-        let resultO = groups.every(function (element) {
+        var resultO = groups.every(function (element) {
             return oPlays.includes(element)
         });
         // Compare X plays to win groups
-        let resultX = groups.every(function (element) {
+        var resultX = groups.every(function (element) {
             return xPlays.includes(element)
         });
         // Remove board event listener if there is a win
         if ((resultO === true) || (resultX === true)) {
             board.removeEventListener('click', boardClick);
         }
-        // Send winner message
+        // Send appropriate winner message
         if (resultO === true) {
-            let message = 'Player One Wins!'
+            var message = 'Player One Wins!';
             showResult(message);
-        } else 
-            if (resultX === true) {
-                let message = 'Player Two Wins!'
-                showResult(message);
-            }      
+        } else if (resultX === true) {
+            var message = 'Player Two Wins!';
+            showResult(message);
+        }
     }
     // If no more plays and no one wins send scratch message
     if ((oPlays.length === 5) && (xPlays.length === 4) && 
@@ -151,40 +150,12 @@ function anyWins(oPlays, xPlays) {
         let message = 'It\'s a Scratch!'
         showResult(message)
     }
-     
 }
-
 // Function to show winner or scratch message
 function showResult(message) {
-    // maybe this can go back in event listener section if not too much going on
-    let div = document.getElementById('message');
-    let p = document.createElement("p");
+    // Add message to div in a p element
+    var div = document.getElementById('message');
+    var p = document.createElement("p");
     p.textContent = message
     div.appendChild(p);
-
 }
-
-
-// Function for setting one player option
-function onePlayer() {
-
-}
-
-//Function for setting two players option
-function twoPlayers() {
-    
-}
-//###############################################################################
-// FINAL TO DOs
-//###############################################################################
-// 3 - Need to send message for deciding on one or two players
-// 4 - One player random plays
-
-// 6 - READme file
-//###############################################################################
-// If time permits ...
-//###############################################################################
-//  1 - Keep track of overall score locally
-//      - Need to look up how to do this from past lessons
-//  2 - Animation to strike through win
-//  3 - Animation for confetti celebration on win OR a wamp wamp for scratch
