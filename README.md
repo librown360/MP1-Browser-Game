@@ -1,6 +1,8 @@
 ## MP1-Browser-Game
 >
 > This was a project assignment for the Full Stack Development Bootcamp to demonstrate skills learned from classes on Front-End programming. The requirement was to build a browser based game that could be played by one or more players and one of those players would be able to win the game. The game I chose to build is Tic Tac Toe. 
+> 
+> Here is the link https://librown360.github.io/MP1-Browser-Game/
 >
 ### Inspiration
 >
